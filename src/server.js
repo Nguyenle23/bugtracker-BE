@@ -1,5 +1,7 @@
 const express = require('express');
-const mapOrder = require('./utilities/sort.js');
+const BoardModel = require('./models/Board.js');
+const ColumnModel = require('./models/Column.js');
+const CardModel = require('./models/Card.js');
 
 //connect database
 const mongodb = require('./config/mongodb.js');
@@ -9,7 +11,7 @@ const app = express();
 
 const port = '4444';
 
-app.get("/", (req, res) => {
+app.get("/test", async(req, res) => {
     res.send("Hello World!");
 });
 

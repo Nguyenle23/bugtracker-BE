@@ -1,27 +1,27 @@
 require('dotenv').config();
 const { MongoClient } = require('mongodb');
 
-
-// Connection URL
-const url = process.env.MONGODB_URL;
-const client = new MongoClient(url, {
-    useNewUrlParser: true,
-    useUnifiedTopology: true,
-});
+let dbInstance = null;
 
 // Database Name
 const dbName = 'bugtracker';
 
 async function connect() {
-    try {
-        await client.connect();
-        console.log('Connection successful');
-    } catch (err) {
-        console.log('Connection failed')
-    } finally {
-        //esure client is closed when finish/error 
-        await client.close();
-    }
+    // Connection URL
+    const url = process.env.MONGODB_URL;
+    const client = new MongoClient(url, {
+        useNewUrlParser: true,
+        useUnifiedTopology: true,
+    });
+
+    await client.connect();
+    dbInstance = client.db(dbName);
+    console.log('Connection successful');
 }
 
-module.exports = { connect };
+async function getDB() {
+    if (!dbInstance) throw new Error('Must connect database first');
+    return dbInstance;
+}
+
+module.exports = { connect, getDB };
