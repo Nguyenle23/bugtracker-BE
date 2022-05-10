@@ -1,19 +1,23 @@
 const express = require('express');
-const BoardModel = require('./models/Board.js');
-const ColumnModel = require('./models/Column.js');
-const CardModel = require('./models/Card.js');
+const methodOverride = require('method-override');
+
+const route = require('./routes/v1');
+const app = express();
+const port = '4444';
 
 //connect database
 const mongodb = require('./config/mongodb.js');
 mongodb.connect();
 
-const app = express();
+//Enable req.body data
+app.use(express.json())
 
-const port = '4444';
+app.use(methodOverride('_method'));
 
-app.get("/test", async(req, res) => {
-    res.send("Hello World!");
-});
+//APIs v1
+app.use('/v1', route);
+
+// route(app);
 
 app.listen(port, () => {
     console.log(`Server listen at http://localhost:${port}`);
