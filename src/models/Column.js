@@ -1,5 +1,6 @@
 const Joi = require('joi');
 const mongodb = require('../config/mongodb.js');
+const ObjectID = require('mongodb').ObjectID;
 
 const column = 'columns';
 
@@ -21,10 +22,21 @@ const createNewColumn = async(data) => {
         const value = await validateSchema(data)
         const db = await mongodb.getDB();
         const result = await db.collection(column).insertOne(value);
-        return result.ops[0]
+        return result.value;
     } catch (error) {
-        console.log(error);
+        throw new Error(error)
     }
 }
 
-module.exports = { createNewColumn };
+const updateColumn = async(id, data) => {
+    try {
+        const db = await mongodb.getDB();
+        const result = await db.collection(column).findOneAndUpdate({ _id: ObjectID(id) }, { $set: data }, { returnOriginal: false });
+        console.log(result);
+        return result;
+    } catch (error) {
+        throw new Error(error)
+    }
+}
+
+module.exports = { createNewColumn, updateColumn };

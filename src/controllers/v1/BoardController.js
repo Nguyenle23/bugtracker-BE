@@ -1,6 +1,6 @@
 const statusCode = require('../../utilities/constants');
 
-const boardService = require('../../services/boardService');
+const boardService = require('../../services/BoardService');
 
 const createBoard = async(req, res) => {
     try {

@@ -20,7 +20,7 @@ const createNewBoard = async(data) => {
         const value = await validateSchema(data)
         const db = await mongodb.getDB();
         const result = await db.collection(board).insertOne(value);
-        return result
+        return result;
     } catch (error) {
         throw new Error(error)
     }

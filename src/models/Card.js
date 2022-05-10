@@ -6,7 +6,7 @@ const card = 'cards';
 const cardSchema = Joi.object({
     boardId: Joi.string().required(),
     columnId: Joi.string().required(),
-    title: Joi.string().required().min(3).max(20),
+    title: Joi.string().required().min(3).max(30),
     cover: Joi.string().default(null),
     createdAt: Joi.date().timestamp().default(Date.now()),
     updatedAt: Joi.date().timestamp().default(null),
@@ -22,9 +22,9 @@ const createNewCard = async(data) => {
         const value = await validateSchema(data)
         const db = await mongodb.getDB();
         const result = await db.collection(card).insertOne(value);
-        return result.ops[0]
+        return result
     } catch (error) {
-        console.log(error);
+        throw new Error(error);
     }
 }
 
