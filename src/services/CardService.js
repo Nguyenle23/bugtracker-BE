@@ -1,9 +1,15 @@
 const Card = require('../models/Card');
+const Column = require('../models/Column');
 
 const createNewCard = async(data) => {
     try {
-        const result = await Card.createNewCard(data);
-        return result;
+        const createNewCard = await Card.createNewCard(data);
+        const getNewCard = await Card.findOneAndById(createNewCard.insertedId.toString());
+
+        //update columnOrder in board
+        await Column.updateColumnOrder(getNewCard.columnId.toString(), getNewCard._id.toString());
+
+        return getNewCard;
     } catch (error) {
         throw new Error(error)
     }

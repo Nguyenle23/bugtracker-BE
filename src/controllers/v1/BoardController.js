@@ -15,16 +15,16 @@ const createBoard = async(req, res) => {
     }
 }
 
-const showBoard = async(req, res) => {
-    res.send(
-        `
-        <h1>Board</h1>
-        <form action="/v1/board" method="POST">
-            <input type="text" name="title" placeholder="Title">
-            <input type="submit" value="Create">
-        </form>
-        `
-    );
+const getBoard = async(req, res) => {
+    try {
+        const { id } = req.params;
+        const result = await boardService.getBoard(id);
+        res.status(statusCode.OK).json(result)
+    } catch (error) {
+        res.status(statusCode.INTERNAL_SERVER_ERROR).json({
+            error: error.message
+        })
+    }
 }
 
-module.exports = { createBoard, showBoard }
+module.exports = { createBoard, getBoard }

@@ -4,7 +4,6 @@ const columnService = require('../../services/ColumnService');
 
 const createColumn = async(req, res) => {
     try {
-        console.log(req.body);
         const result = await columnService.createNewColumn(req.body);
         res.status(statusCode.OK).json(result)
     } catch (error) {

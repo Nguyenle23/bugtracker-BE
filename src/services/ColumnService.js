@@ -1,10 +1,18 @@
 const Column = require('../models/Column');
+const Board = require('../models/Board');
 
 const createNewColumn = async(data) => {
     try {
-        const result = await Column.createNewColumn(data);
-        return result;
+        const createNewColumn = await Column.createNewColumn(data);
+
+        const getNewColumn = await Column.findOneAndById(createNewColumn.insertedId.toString());
+
+        //update columnOrder in board
+        await Board.updateColumnOrder(getNewColumn.boardId.toString(), getNewColumn._id.toString());
+
+        return getNewColumn;
     } catch (error) {
+        console.error(error)
         throw new Error(error)
     }
 }
@@ -16,7 +24,6 @@ const updateColumn = async(id, data) => {
             updatedAt: Date.now()
         }
         const result = await Column.updateColumn(id, updateData);
-        console.log(updateData)
         return result;
     } catch (error) {
         throw new Error(error)

@@ -6,8 +6,11 @@ const boardValid = require('../../validations/BoardValid');
 
 const boardController = require('../../controllers/v1/BoardController');
 
+//get particular board
+router.get('/:id', boardController.getBoard);
+
+//get list of board
 router.post('/', boardValid.checkCreateNewBoard, boardController.createBoard);
-router.get('/', boardController.showBoard);
 
 
 module.exports = router;
