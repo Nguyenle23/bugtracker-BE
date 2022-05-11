@@ -54,7 +54,6 @@ const createNewColumn = async(data) => {
         }
         const db = await mongodb.getDB();
         const result = await db.collection(column).insertOne(insertValue);
-        console.log(result);
         return result;
     } catch (error) {
         throw new Error(error)
@@ -65,7 +64,6 @@ const updateColumn = async(id, data) => {
     try {
         const db = await mongodb.getDB();
         const result = await db.collection(column).findOneAndUpdate({ _id: ObjectId(id) }, { $set: data }, { returnDocument: 'after' });
-        console.log(result);
         return result;
     } catch (error) {
         throw new Error(error)

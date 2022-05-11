@@ -22,7 +22,6 @@ const updateCard = async(id, data) => {
             updatedAt: Date.now()
         }
         const result = await Card.updateCard(id, updateData);
-        console.log(updateData)
         return result;
     } catch (error) {
         throw new Error(error)

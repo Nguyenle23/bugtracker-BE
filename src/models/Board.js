@@ -51,7 +51,6 @@ const updateColumnOrder = async(boardId, columnId) => {
     try {
         const db = await mongodb.getDB();
         const result = await db.collection(board).findOneAndUpdate({ _id: ObjectId(boardId) }, { $push: { columnOrder: columnId } }, { returnDocument: 'after' });
-        // console.log(result)
         return result.value;
     } catch (error) {
         throw new Error(error)
@@ -89,7 +88,6 @@ const getBoard = async(boardId) => {
                 }
             }
         ]).toArray();
-        console.log(result);
         return result[0] || {};
     } catch (error) {
         throw new Error(error)

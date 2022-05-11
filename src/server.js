@@ -1,5 +1,7 @@
 const express = require('express');
 const methodOverride = require('method-override');
+const cors = require('cors');
+const corsOptions = require('./config/cors');
 
 const route = require('./routes/v1');
 const app = express();
@@ -13,6 +15,8 @@ mongodb.connect();
 app.use(express.json())
 
 app.use(methodOverride('_method'));
+
+app.use(cors(corsOptions));
 
 //APIs v1
 app.use('/v1', route);
