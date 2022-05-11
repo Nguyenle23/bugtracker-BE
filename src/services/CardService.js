@@ -21,11 +21,14 @@ const updateCard = async(id, data) => {
             ...data,
             updatedAt: Date.now()
         }
-        const result = await Card.updateCard(id, updateData);
-        return result;
+        if (updateData._id) delete updateData._id;
+
+        const updateCard = await Card.updateCard(id, updateData);
+        return updateCard;
     } catch (error) {
         throw new Error(error)
     }
 }
+
 
 module.exports = { createNewCard, updateCard };

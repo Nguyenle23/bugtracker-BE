@@ -95,4 +95,17 @@ const getBoard = async(boardId) => {
     }
 }
 
-module.exports = { findOneAndById, createNewBoard, getBoard, updateColumnOrder };
+const updateBoard = async(id, data) => {
+    try {
+        const updateData = {
+            ...data
+        }
+        const db = await mongodb.getDB();
+        const result = await db.collection(board).findOneAndUpdate({ _id: ObjectId(id) }, { $set: updateData }, { returnDocument: 'after' });
+        return result.value;
+    } catch (error) {
+        throw new Error(error)
+    }
+}
+
+module.exports = { findOneAndById, createNewBoard, getBoard, updateColumnOrder, updateBoard };

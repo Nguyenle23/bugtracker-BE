@@ -35,7 +35,6 @@ const updateColumn = async(id, data) => {
             Card.deleteCard(updatedColumn.cardOrder);
         }
 
-
         return updatedColumn;
     } catch (error) {
         throw new Error(error)

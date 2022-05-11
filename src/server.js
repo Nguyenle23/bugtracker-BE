@@ -23,6 +23,6 @@ app.use('/v1', route);
 
 // route(app);
 
-app.listen(port, () => {
+app.listen(port || process.env.PORT, () => {
     console.log(`Server listen at http://localhost:${port}`);
 });

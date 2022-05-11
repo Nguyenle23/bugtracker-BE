@@ -8,5 +8,7 @@ const cardController = require('../../controllers/v1/CardController');
 
 router.post('/', cardValid.checkCreateNewCard, cardController.createCard);
 
+//update card
+router.put('/:id', cardValid.checkUpdateCard, cardController.updateCard);
 
 module.exports = router;

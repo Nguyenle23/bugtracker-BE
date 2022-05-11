@@ -1,4 +1,4 @@
-const WHITELIST_DOMAIN = ['http://localhost:3000', 'http://localhost:3001'];
+const WHITELIST_DOMAIN = ['http://localhost:3000, http://localhost:3001'];
 const corsOptions = {
     origin: function(origin, callback) {
         if (WHITELIST_DOMAIN.indexOf(origin) !== -1) {

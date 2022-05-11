@@ -25,4 +25,16 @@ const getBoard = async(req, res) => {
     }
 }
 
-module.exports = { createBoard, getBoard }
+const updateBoard = async(req, res) => {
+    try {
+        const { id } = req.params;
+        const result = await boardService.updateBoard(id, req.body);
+        res.status(statusCode.OK).json(result)
+    } catch (error) {
+        res.status(statusCode.INTERNAL_SERVER_ERROR).json({
+            error: error.message
+        })
+    }
+}
+
+module.exports = { createBoard, getBoard, updateBoard }

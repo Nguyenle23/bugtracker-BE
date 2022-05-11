@@ -4,7 +4,6 @@ const cardService = require('../../services/CardService');
 
 const createCard = async(req, res) => {
     try {
-        console.log(req.body);
         const result = await cardService.createNewCard(req.body);
         res.status(statusCode.OK).json(result)
     } catch (error) {
