@@ -1,18 +1,28 @@
 const express = require('express');
-const mapOrder = require('./utilities/sort.js');
+const methodOverride = require('method-override');
+const cors = require('cors');
+const corsOptions = require('./config/cors');
+
+const route = require('./routes/v1');
+const app = express();
+const port = '4444';
 
 //connect database
 const mongodb = require('./config/mongodb.js');
 mongodb.connect();
 
-const app = express();
+//Enable req.body data
+app.use(express.json())
 
-const port = '4444';
+app.use(methodOverride('_method'));
 
-app.get("/", (req, res) => {
-    res.send("Hello World!");
-});
+app.use(cors(corsOptions));
 
-app.listen(port, () => {
+//APIs v1
+app.use('/v1', route);
+
+// route(app);
+
+app.listen(port || process.env.PORT, () => {
     console.log(`Server listen at http://localhost:${port}`);
 });
