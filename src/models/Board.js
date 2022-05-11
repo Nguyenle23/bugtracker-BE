@@ -63,6 +63,7 @@ const getBoard = async(boardId) => {
         const result = await db.collection(board).aggregate([{
                 $match: {
                     _id: ObjectId(boardId),
+                    _destroy: false,
                 }
             },
             //convert id String to id ObjectId

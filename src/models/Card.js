@@ -46,4 +46,19 @@ const createNewCard = async(data) => {
     }
 }
 
-module.exports = { card, findOneAndById, createNewCard, };
+/**
+ * 
+ * @param {Array of string card id} ids 
+ */
+const deleteCard = async(ids) => {
+    try {
+        const transformedIds = ids.map(id => ObjectId(id));
+        const db = await mongodb.getDB();
+        const result = await db.collection(card).updateMany({ _id: { $in: transformedIds } }, { $set: { _destroy: true } });
+        return result
+    } catch (error) {
+        throw new Error(error);
+    }
+}
+
+module.exports = { card, findOneAndById, createNewCard, deleteCard };

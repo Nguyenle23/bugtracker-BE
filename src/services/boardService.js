@@ -1,4 +1,5 @@
 const Board = require('../models/Board');
+const cloneDeep = require('lodash').cloneDeep;
 
 const createNewBoard = async(data) => {
     try {
@@ -19,17 +20,24 @@ const getBoard = async(boardId) => {
             throw new Error('Board not found');
         }
 
+        const transformBoard = cloneDeep(getFullBoard);
+
+        //Filter columns
+        transformBoard.columns = transformBoard.columns.filter(column => {
+            return !column._destroy;
+        });
+
         //add card to each column
-        getFullBoard.columns.forEach(column => {
-            column.cards = getFullBoard.cards.filter(c => c.columnId.toString() === column._id.toString());
+        transformBoard.columns.forEach(column => {
+            column.cards = transformBoard.cards.filter(c => c.columnId.toString() === column._id.toString());
         });
 
         //sort columns by columnOrder, sort cards by cardOrder --> Reactjs
 
         //remove field cards[] from board
-        delete getFullBoard.cards;
+        delete transformBoard.cards;
 
-        return getFullBoard;
+        return transformBoard;
     } catch (error) {
         throw new Error(error)
     }
